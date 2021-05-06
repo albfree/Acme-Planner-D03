@@ -14,12 +14,14 @@ package acme.features.manager.workplan;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.entities.roles.Manager;
+import acme.entities.tasks.Task;
 import acme.entities.workplans.WorkPlan;
 import acme.framework.components.Model;
 import acme.framework.components.Request;
@@ -126,6 +128,25 @@ public class ManagerWorkPlanShowService implements AbstractShowService<Manager, 
 					+ maxCalendar.get(Calendar.YEAR) + " a las "
 					+ maxCalendar.get(Calendar.HOUR_OF_DAY));
 			}
+		}
+		
+		// Preparamos las variables para los desplegables de tareas
+
+		final List<Task> tasksToAdd = (List<Task>) this.repository.findAllTasksByManager(request.getPrincipal().getActiveRoleId());
+		final List<Task> tasksToDelete = (List<Task>) entity.getTasks();
+		
+		if (!tasksToDelete.isEmpty()) {
+			model.setAttribute("tasksToDelete", tasksToDelete);
+			
+			if (!tasksToAdd.isEmpty()) {
+				tasksToAdd.removeAll(tasksToDelete);
+			}
+		}
+		
+		model.setAttribute("hasAvailableTasks", !tasksToAdd.isEmpty());
+		
+		if (!tasksToAdd.isEmpty()) {
+			model.setAttribute("tasksToAdd", tasksToAdd);
 		}
 	}
 

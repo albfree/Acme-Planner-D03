@@ -12,6 +12,11 @@
 
 package acme.features.manager.workplan;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +65,94 @@ public class ManagerWorkPlanUpdateService implements AbstractUpdateService<Manag
 		assert errors != null;
 
 		request.bind(entity, errors);
+		
+		request.getModel().setAttribute("hasTasks", !entity.getTasks().isEmpty());
+		
+		if (!entity.getTasks().isEmpty()) {
+			
+			/*
+			 * Sonarlint marca como inadecuado lo siguiente por no
+			 * usar isPresent para asegurar que el valor está, pero
+			 * en este caso no es necesario porque se comprueba previamente
+			 * que la lista está llena de tareas.
+			 */
+			
+			final Date minDate = entity.getTasks().stream().map(task -> task.getStartExecutionPeriod()).min(Date::compareTo).get();
+			final Date maxDate = entity.getTasks().stream().map(task -> task.getEndExecutionPeriod()).max(Date::compareTo).get();
+			
+			final Calendar minCalendar = Calendar.getInstance();
+			minCalendar.setTime(minDate);
+			minCalendar.add(Calendar.DAY_OF_MONTH, -1);
+			minCalendar.set(Calendar.HOUR_OF_DAY, 8);
+			
+			final int minMonth = minCalendar.get(Calendar.MONTH) + 1;
+			
+			String stringMinMonth = "";
+			if (minMonth < 10) {
+			    stringMinMonth = "0" + minMonth;
+			} else {
+			    stringMinMonth = String.valueOf(minMonth);
+			}
+			
+			final Calendar maxCalendar = Calendar.getInstance();
+			maxCalendar.setTime(maxDate);
+			maxCalendar.add(Calendar.DAY_OF_MONTH, 1);
+			maxCalendar.set(Calendar.HOUR_OF_DAY, 17);
+			
+			final int maxMonth = maxCalendar.get(Calendar.MONTH) + 1;
+			
+			String stringMaxMonth = "";
+			if (maxMonth < 10) {
+			    stringMaxMonth = "0" + maxMonth;
+			} else {
+			    stringMaxMonth = String.valueOf(maxMonth);
+			}
+			
+			if (request.getLocale().equals(Locale.ENGLISH)) {
+				request.getModel().setAttribute("suggestedStartDate", "Suggested start date: " 
+					+ minCalendar.get(Calendar.YEAR) + "/"
+					+ stringMinMonth + "/"
+					+ minCalendar.get(Calendar.DAY_OF_MONTH) + " at "
+					+ minCalendar.get(Calendar.HOUR_OF_DAY));
+				
+				request.getModel().setAttribute("suggestedEndDate", "Suggested finish date: " 
+					+ maxCalendar.get(Calendar.YEAR) + "/"
+					+ stringMaxMonth + "/"
+					+ maxCalendar.get(Calendar.DAY_OF_MONTH) + " at "
+					+ maxCalendar.get(Calendar.HOUR_OF_DAY));
+			} else {
+				request.getModel().setAttribute("suggestedStartDate", "Fecha de inicio recomendada: " 
+					+ minCalendar.get(Calendar.DAY_OF_MONTH) + "/"
+					+ stringMinMonth + "/"
+					+ minCalendar.get(Calendar.YEAR) + " a las "
+					+ minCalendar.get(Calendar.HOUR_OF_DAY));
+				
+				request.getModel().setAttribute("suggestedEndDate", "Fecha de fin recomendada: " 
+					+ maxCalendar.get(Calendar.DAY_OF_MONTH) + "/"
+					+ stringMaxMonth + "/"
+					+ maxCalendar.get(Calendar.YEAR) + " a las "
+					+ maxCalendar.get(Calendar.HOUR_OF_DAY));
+			}
+		}
+		
+		// Preparamos las variables para los desplegables de tareas
+
+		final List<Task> tasksToAdd = (List<Task>) this.repository.findAllTasksByManager(request.getPrincipal().getActiveRoleId());
+		final List<Task> tasksToDelete = (List<Task>) entity.getTasks();
+
+		if (!tasksToDelete.isEmpty()) {
+			request.getModel().setAttribute("tasksToDelete", tasksToDelete);
+
+			if (!tasksToAdd.isEmpty()) {
+				tasksToAdd.removeAll(tasksToDelete);
+			}
+		}
+
+		request.getModel().setAttribute("hasAvailableTasks", !tasksToAdd.isEmpty());
+
+		if (!tasksToAdd.isEmpty()) {
+			request.getModel().setAttribute("tasksToAdd", tasksToAdd);
+		}
 	}
 	
 	@Override
@@ -71,6 +164,94 @@ public class ManagerWorkPlanUpdateService implements AbstractUpdateService<Manag
 		request.unbind(entity, model, "title", "startExecutionPeriod", "endExecutionPeriod", "share", "totalWorkload");
 		
 		model.setAttribute("wpID", entity.getId());
+		
+		model.setAttribute("hasTasks", !entity.getTasks().isEmpty());
+		
+		if (!entity.getTasks().isEmpty()) {
+			
+			/*
+			 * Sonarlint marca como inadecuado lo siguiente por no
+			 * usar isPresent para asegurar que el valor está, pero
+			 * en este caso no es necesario porque se comprueba previamente
+			 * que la lista está llena de tareas.
+			 */
+			
+			final Date minDate = entity.getTasks().stream().map(task -> task.getStartExecutionPeriod()).min(Date::compareTo).get();
+			final Date maxDate = entity.getTasks().stream().map(task -> task.getEndExecutionPeriod()).max(Date::compareTo).get();
+			
+			final Calendar minCalendar = Calendar.getInstance();
+			minCalendar.setTime(minDate);
+			minCalendar.add(Calendar.DAY_OF_MONTH, -1);
+			minCalendar.set(Calendar.HOUR_OF_DAY, 8);
+			
+			final int minMonth = minCalendar.get(Calendar.MONTH) + 1;
+			
+			String stringMinMonth = "";
+			if (minMonth < 10) {
+			    stringMinMonth = "0" + minMonth;
+			} else {
+			    stringMinMonth = String.valueOf(minMonth);
+			}
+			
+			final Calendar maxCalendar = Calendar.getInstance();
+			maxCalendar.setTime(maxDate);
+			maxCalendar.add(Calendar.DAY_OF_MONTH, 1);
+			maxCalendar.set(Calendar.HOUR_OF_DAY, 17);
+			
+			final int maxMonth = maxCalendar.get(Calendar.MONTH) + 1;
+			
+			String stringMaxMonth = "";
+			if (maxMonth < 10) {
+			    stringMaxMonth = "0" + maxMonth;
+			} else {
+			    stringMaxMonth = String.valueOf(maxMonth);
+			}
+			
+			if (request.getLocale().equals(Locale.ENGLISH)) {
+				model.setAttribute("suggestedStartDate", "Suggested start date: " 
+					+ minCalendar.get(Calendar.YEAR) + "/"
+					+ stringMinMonth + "/"
+					+ minCalendar.get(Calendar.DAY_OF_MONTH) + " at "
+					+ minCalendar.get(Calendar.HOUR_OF_DAY));
+				
+				model.setAttribute("suggestedEndDate", "Suggested finish date: " 
+					+ maxCalendar.get(Calendar.YEAR) + "/"
+					+ stringMaxMonth + "/"
+					+ maxCalendar.get(Calendar.DAY_OF_MONTH) + " at "
+					+ maxCalendar.get(Calendar.HOUR_OF_DAY));
+			} else {
+				model.setAttribute("suggestedStartDate", "Fecha de inicio recomendada: " 
+					+ minCalendar.get(Calendar.DAY_OF_MONTH) + "/"
+					+ stringMinMonth + "/"
+					+ minCalendar.get(Calendar.YEAR) + " a las "
+					+ minCalendar.get(Calendar.HOUR_OF_DAY));
+				
+				model.setAttribute("suggestedEndDate", "Fecha de fin recomendada: " 
+					+ maxCalendar.get(Calendar.DAY_OF_MONTH) + "/"
+					+ stringMaxMonth + "/"
+					+ maxCalendar.get(Calendar.YEAR) + " a las "
+					+ maxCalendar.get(Calendar.HOUR_OF_DAY));
+			}
+		}
+		
+		// Preparamos las variables para los desplegables de tareas
+
+		final List<Task> tasksToAdd = (List<Task>) this.repository.findAllTasksByManager(request.getPrincipal().getActiveRoleId());
+		final List<Task> tasksToDelete = (List<Task>) entity.getTasks();
+
+		if (!tasksToDelete.isEmpty()) {
+			model.setAttribute("tasksToDelete", tasksToDelete);
+
+			if (!tasksToAdd.isEmpty()) {
+				tasksToAdd.removeAll(tasksToDelete);
+			}
+		}
+
+		model.setAttribute("hasAvailableTasks", !tasksToAdd.isEmpty());
+
+		if (!tasksToAdd.isEmpty()) {
+			model.setAttribute("tasksToAdd", tasksToAdd);
+		}
 	}
 	
 	@Override
@@ -115,45 +296,36 @@ public class ManagerWorkPlanUpdateService implements AbstractUpdateService<Manag
 				"endExecutionPeriod", "manager.work-plan.form.error.period-tasks-invalid");
 		}
 		
-		try {
-			final Integer idTaskToAdd = request.getModel().getInteger("addTaskId");
-			
-			if (idTaskToAdd != null) {
-				final Task taskToAdd = this.repository.findTaskById(idTaskToAdd);
+		final int idTaskToAdd = request.getModel().getInteger("addTask");
 
+		if (idTaskToAdd != -1) {
+
+			final Task taskToAdd = this.repository.findAllTasksByManager(request.getPrincipal().getActiveRoleId()).stream().filter(task -> task.getId() 
+				== idTaskToAdd).findAny().orElse(null);
+
+			if (taskToAdd != null) {
 				if (entity.getTasks().contains(taskToAdd)) {
-					errors.state(request, false, "addTaskId", "manager.work-plan.form.error.task.contains.invalid");
+					errors.state(request, false, "addTask", "manager.work-plan.form.error.task.contains.invalid");
 				} else if (taskToAdd.getShare().equals(TaskShare.PRIVATE) && entity.getShare().equals(WorkPlanShare.PUBLIC)) {
-					errors.state(request, false, "addTaskId", "manager.work-plan.form.error.task.private.invalid");
-				} else if (taskToAdd.getStartExecutionPeriod().before(entity.getStartExecutionPeriod())
+					errors.state(request, false, "addTask", "manager.work-plan.form.error.task.private.invalid");
+				} else if (taskToAdd.getStartExecutionPeriod().before(entity.getStartExecutionPeriod()) 
 					|| taskToAdd.getEndExecutionPeriod().after(entity.getEndExecutionPeriod())) {
-					errors.state(request, false, "addTaskId", "manager.work-plan.form.error.task.period.invalid");
+					errors.state(request, false, "addTask", "manager.work-plan.form.error.task.period.invalid");
 				} else {
 					entity.getTasks().add(taskToAdd);
 				}
 			}
-			
-		} catch (final Exception e) {
-			errors.state(request, false, 
-				"addTaskId", "manager.work-plan.form.error.task.id.invalid");
 		}
 		
-		try {
-			final Integer idTaskToDelete = request.getModel().getInteger("deleteTaskId");
-			
-			if (idTaskToDelete != null) {
-				final Task taskToDelete = this.repository.findTaskById(idTaskToDelete);
+		final Integer idTaskToDelete = request.getModel().getInteger("deleteTask");
 
-				if (!entity.getTasks().contains(taskToDelete)) {
-					errors.state(request, false, "deleteTaskId", "manager.work-plan.form.error.task.not.contains.invalid");
-				} else {
-					entity.getTasks().remove(taskToDelete);
-				}
+		if (idTaskToDelete != -1) {
+
+			final Task taskToDelete = entity.getTasks().stream().filter(task -> task.getId() == idTaskToDelete).findAny().orElse(null);
+
+			if (taskToDelete != null) {
+				entity.getTasks().remove(taskToDelete);
 			}
-			
-		} catch (final Exception e) {
-			errors.state(request, false, 
-				"deleteTaskId", "manager.work-plan.form.error.task.id.invalid");
 		}
 	}
 	

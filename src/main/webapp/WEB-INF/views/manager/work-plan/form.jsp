@@ -39,12 +39,22 @@
 	<acme:form-double readonly="true" code="manager.work-plan.form.label.total-workload" path="totalWorkload"/>
 	</jstl:if>
 	
-	<jstl:if test="${command != 'create'}">
-	<acme:form-integer code="manager.work-plan.form.label.task.add" placeholder="90" path="addTaskId"/>
+	<jstl:if test="${command != 'create' and hasAvailableTasks}">
+		<acme:form-select code="manager.work-plan.form.label.task.add" path="addTask">
+			<acme:form-option code="Seleccionar" value="-1" selected="true"/>
+			<jstl:forEach items="${tasksToAdd}" var="task">
+				<acme:form-option code="${task.id} - ${task.title}" value="${task.id}" selected="${addTask == task}"/>
+			</jstl:forEach>
+		</acme:form-select>
 	</jstl:if>
 	
-	<jstl:if test="${command != 'create'}">
-	<acme:form-integer code="manager.work-plan.form.label.task.delete" placeholder="90" path="deleteTaskId"/>
+	<jstl:if test="${command != 'create' and hasTasks}">
+		<acme:form-select code="manager.work-plan.form.label.task.delete" path="deleteTask">
+			<acme:form-option code="Seleccionar" value="-1" selected="true"/>
+			<jstl:forEach items="${tasksToDelete}" var="task">
+				<acme:form-option code="${task.id} - ${task.title}" value="${task.id}" selected="${deleteTask == task}"/>
+			</jstl:forEach>
+		</acme:form-select>
 	</jstl:if>
 	
 	<acme:form-submit test="${command != 'create'}" method="get" code="manager.work-plan.form.button.task.list" 

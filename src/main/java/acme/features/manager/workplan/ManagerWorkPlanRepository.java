@@ -36,5 +36,8 @@ public interface ManagerWorkPlanRepository extends AbstractRepository {
 	
 	@Query("select t from Task t where t.id = ?1")
 	Task findTaskById(int id);
+	
+	@Query("select t from Task t where t.manager.id = ?1")
+	Collection<Task> findAllTasksByManager(int id);
 
 }

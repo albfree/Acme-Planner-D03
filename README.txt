@@ -13,14 +13,7 @@ who have enroled the Design and Testing subject of the Software Engineering curr
 University of Sevilla.  This project helps them start working on their new information system 
 projects.
 
-This is Acme Planner, the second project of Group 11 for Design & Testing 2 subject.
-
-# GitHub repository: https://github.com/albgueram/Acme-Planner-D02
-# GitHub release: https://github.com/albgueram/Acme-Planner-D02/releases/tag/v1.2
-
-# Credenciales de Clever Cloud: como el repositorio es público, por seguridad no se incluyen aquí las
-credenciales. En su lugar, se dejarán indicadas en un README.txt en el zip de la entrega de la enseñanza
-virtual.
+This is Acme Planner D03, the third project of Group 11 for Design & Testing 2 subject.
 
 # Apunte sobre Clever Cloud: debido a un error que se desconocía, en la aplicación desplegada las
 URLs que contienen /manager provocan errores. Para solucionarlo, se modifica el campo 'context' del war.json

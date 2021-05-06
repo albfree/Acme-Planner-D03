@@ -12,10 +12,13 @@
 
 package acme.features.manager.workplan;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.entities.roles.Manager;
+import acme.entities.tasks.Task;
 import acme.entities.workplans.WorkPlan;
 import acme.framework.components.Errors;
 import acme.framework.components.Model;
@@ -64,6 +67,27 @@ public class ManagerWorkPlanDeleteService implements AbstractDeleteService<Manag
 		request.unbind(entity, model, "title", "startExecutionPeriod", "endExecutionPeriod", "share", "totalWorkload");
 		
 		model.setAttribute("wpID", entity.getId());
+		
+		model.setAttribute("hasTasks", !entity.getTasks().isEmpty());
+		
+		// Preparamos las variables para los desplegables de tareas
+
+		final List<Task> tasksToAdd = (List<Task>) this.repository.findAllTasksByManager(request.getPrincipal().getActiveRoleId());
+		final List<Task> tasksToDelete = (List<Task>) entity.getTasks();
+
+		if (!tasksToDelete.isEmpty()) {
+			model.setAttribute("tasksToDelete", tasksToDelete);
+
+			if (!tasksToAdd.isEmpty()) {
+				tasksToAdd.removeAll(tasksToDelete);
+			}
+		}
+
+		model.setAttribute("hasAvailableTasks", !tasksToAdd.isEmpty());
+
+		if (!tasksToAdd.isEmpty()) {
+			model.setAttribute("tasksToAdd", tasksToAdd);
+		}
 	}
 
 	@Override
