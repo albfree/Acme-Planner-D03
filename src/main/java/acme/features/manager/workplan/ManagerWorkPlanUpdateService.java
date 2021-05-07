@@ -296,35 +296,40 @@ public class ManagerWorkPlanUpdateService implements AbstractUpdateService<Manag
 				"endExecutionPeriod", "manager.work-plan.form.error.period-tasks-invalid");
 		}
 		
-		final int idTaskToAdd = request.getModel().getInteger("addTask");
+		if (request.getModel().hasAttribute("addTask")) {
+			final int idTaskToAdd = request.getModel().getInteger("addTask");
 
-		if (idTaskToAdd != -1) {
+			if (idTaskToAdd != -1) {
 
-			final Task taskToAdd = this.repository.findAllTasksByManager(request.getPrincipal().getActiveRoleId()).stream().filter(task -> task.getId() 
-				== idTaskToAdd).findAny().orElse(null);
+				final Task taskToAdd = this.repository.findAllTasksByManager(request.getPrincipal().getActiveRoleId()).stream().filter(
+					task -> task.getId() == idTaskToAdd).findAny().orElse(null);
 
-			if (taskToAdd != null) {
-				if (entity.getTasks().contains(taskToAdd)) {
-					errors.state(request, false, "addTask", "manager.work-plan.form.error.task.contains.invalid");
-				} else if (taskToAdd.getShare().equals(TaskShare.PRIVATE) && entity.getShare().equals(WorkPlanShare.PUBLIC)) {
-					errors.state(request, false, "addTask", "manager.work-plan.form.error.task.private.invalid");
-				} else if (taskToAdd.getStartExecutionPeriod().before(entity.getStartExecutionPeriod()) 
-					|| taskToAdd.getEndExecutionPeriod().after(entity.getEndExecutionPeriod())) {
-					errors.state(request, false, "addTask", "manager.work-plan.form.error.task.period.invalid");
-				} else {
-					entity.getTasks().add(taskToAdd);
+				if (taskToAdd != null) {
+					
+					if (entity.getTasks().contains(taskToAdd)) {
+						errors.state(request, false, "addTask", "manager.work-plan.form.error.task.contains.invalid");
+					} else if (taskToAdd.getShare().equals(TaskShare.PRIVATE) && entity.getShare().equals(WorkPlanShare.PUBLIC)) {
+						errors.state(request, false, "addTask", "manager.work-plan.form.error.task.private.invalid");
+					} else if (taskToAdd.getStartExecutionPeriod().before(entity.getStartExecutionPeriod()) 
+						|| taskToAdd.getEndExecutionPeriod().after(entity.getEndExecutionPeriod())) {
+						errors.state(request, false, "addTask", "manager.work-plan.form.error.task.period.invalid");
+					} else {
+						entity.getTasks().add(taskToAdd);
+					}
 				}
 			}
 		}
 		
-		final Integer idTaskToDelete = request.getModel().getInteger("deleteTask");
+		if (request.getModel().hasAttribute("deleteTask")) {
+			final int idTaskToDelete = request.getModel().getInteger("deleteTask");
 
-		if (idTaskToDelete != -1) {
+			if (idTaskToDelete != -1) {
 
-			final Task taskToDelete = entity.getTasks().stream().filter(task -> task.getId() == idTaskToDelete).findAny().orElse(null);
+				final Task taskToDelete = entity.getTasks().stream().filter(task -> task.getId() == idTaskToDelete).findAny().orElse(null);
 
-			if (taskToDelete != null) {
-				entity.getTasks().remove(taskToDelete);
+				if (taskToDelete != null) {
+					entity.getTasks().remove(taskToDelete);
+				}
 			}
 		}
 	}
