@@ -77,8 +77,8 @@ public class ManagerWorkPlanUpdateService implements AbstractUpdateService<Manag
 			 * que la lista está llena de tareas.
 			 */
 			
-			final Date minDate = entity.getTasks().stream().map(task -> task.getStartExecutionPeriod()).min(Date::compareTo).get();
-			final Date maxDate = entity.getTasks().stream().map(task -> task.getEndExecutionPeriod()).max(Date::compareTo).get();
+			final Date minDate = entity.getTasks().stream().map(Task::getStartExecutionPeriod).min(Date::compareTo).get();
+			final Date maxDate = entity.getTasks().stream().map(Task::getEndExecutionPeriod).max(Date::compareTo).get();
 			
 			final Calendar minCalendar = Calendar.getInstance();
 			minCalendar.setTime(minDate);
@@ -176,8 +176,8 @@ public class ManagerWorkPlanUpdateService implements AbstractUpdateService<Manag
 			 * que la lista está llena de tareas.
 			 */
 			
-			final Date minDate = entity.getTasks().stream().map(task -> task.getStartExecutionPeriod()).min(Date::compareTo).get();
-			final Date maxDate = entity.getTasks().stream().map(task -> task.getEndExecutionPeriod()).max(Date::compareTo).get();
+			final Date minDate = entity.getTasks().stream().map(Task::getStartExecutionPeriod).min(Date::compareTo).get();
+			final Date maxDate = entity.getTasks().stream().map(Task::getEndExecutionPeriod).max(Date::compareTo).get();
 			
 			final Calendar minCalendar = Calendar.getInstance();
 			minCalendar.setTime(minDate);
