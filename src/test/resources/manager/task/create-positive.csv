@@ -1,0 +1,4 @@
+recordIndex,title,startPeriod,endPeriod,workload,description,visibility,link
+7,Task 06,2022/02/13 11:00,2022/03/16 21:30,30.00,This is the description for Task 06,PUBLIC,
+8,Task 07,2022/07/12 12:00,2022/08/21 21:00,40.00,This is the description for Task 07,PRIVATE,http://www.example.org
+9,Task 08,2022/03/10 10:00,2022/04/09 16:30,22.30,This is the description for Task 08,PUBLIC,http://www.example.org
