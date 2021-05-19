@@ -103,17 +103,19 @@ public class ManagerTaskCreateService implements AbstractCreateService<Manager, 
 			}
 		}
 		
-		final Date currentDate = new Date();
-		final Date startExecutionPeriod = entity.getStartExecutionPeriod();
-		final Date endExecutionPeriod = entity.getEndExecutionPeriod();
-		
-		if (!errors.hasErrors("startExecutionPeriod")) {
-			errors.state(request, startExecutionPeriod.after(currentDate), "startExecutionPeriod", "manager.task.form.error.start-period-future");
-		}
-		
-		if (!errors.hasErrors("endExecutionPeriod")) {
-			errors.state(request, endExecutionPeriod.after(currentDate), "endExecutionPeriod", "manager.task.form.error.end-period-future");
-			errors.state(request, endExecutionPeriod.after(startExecutionPeriod), "endExecutionPeriod", "manager.task.form.error.period-invalid");
+		if (!errors.hasErrors("startExecutionPeriod") && !errors.hasErrors("endExecutionPeriod")) {
+			final Date currentDate = new Date();
+			final Date startExecutionPeriod = entity.getStartExecutionPeriod();
+			final Date endExecutionPeriod = entity.getEndExecutionPeriod();
+			
+			if (!errors.hasErrors("startExecutionPeriod")) {
+				errors.state(request, startExecutionPeriod.after(currentDate), "startExecutionPeriod", "manager.task.form.error.start-period-future");
+			}
+			
+			if (!errors.hasErrors("endExecutionPeriod")) {
+				errors.state(request, endExecutionPeriod.after(currentDate), "endExecutionPeriod", "manager.task.form.error.end-period-future");
+				errors.state(request, endExecutionPeriod.after(startExecutionPeriod), "endExecutionPeriod", "manager.task.form.error.period-invalid");
+			}
 		}
 		
 		if (!errors.hasErrors("title")) {

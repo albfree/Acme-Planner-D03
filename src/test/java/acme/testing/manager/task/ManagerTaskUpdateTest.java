@@ -1,6 +1,7 @@
 package acme.testing.manager.task;
 
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
@@ -11,16 +12,18 @@ public class ManagerTaskUpdateTest extends AcmePlannerTest {
 	@ParameterizedTest
 	@CsvFileSource(resources = "/manager/task/update-positive.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void updatePositive(final int recordIndex, final String title, final String startPeriod, final String endPeriod, final String workload, final String description, final String visibility, final String link) {
+	public void updatePositive(final int recordIndex, final String title, final String startPeriod, final String endPeriod, final String workload, final String description, final String visibility, final String link, final String newTitle) {
 		super.signIn("manager1", "manager1");
 
 		super.clickOnMenu("Manager", "Tasks list");
+		
+		super.checkNotPanicExists();
 		
 		super.checkColumnHasValue(recordIndex, 0, title);
 		
 		super.clickOnListingRecord(recordIndex);
 
-		super.fillInputBoxIn("title", title);
+		super.fillInputBoxIn("title", newTitle);
 		super.fillInputBoxIn("startExecutionPeriod", startPeriod);
 		super.fillInputBoxIn("endExecutionPeriod", endPeriod);
 		super.fillInputBoxIn("workload", workload);
@@ -31,14 +34,14 @@ public class ManagerTaskUpdateTest extends AcmePlannerTest {
 
 		super.clickOnMenu("Manager", "Tasks list");
 		
-		super.checkColumnHasValue(recordIndex, 0, title);
+		super.checkColumnHasValue(recordIndex, 0, newTitle);
 		super.checkColumnHasValue(recordIndex, 1, startPeriod);
 		super.checkColumnHasValue(recordIndex, 2, endPeriod);
 		super.checkColumnHasValue(recordIndex, 3, workload);
 
 		super.clickOnListingRecord(recordIndex);
 
-		super.checkInputBoxHasValue("title", title);
+		super.checkInputBoxHasValue("title", newTitle);
 		super.checkInputBoxHasValue("startExecutionPeriod", startPeriod);
 		super.checkInputBoxHasValue("endExecutionPeriod", endPeriod);
 		super.checkInputBoxHasValue("workload", workload);
@@ -57,8 +60,10 @@ public class ManagerTaskUpdateTest extends AcmePlannerTest {
 
 		super.clickOnMenu("Manager", "Tasks list");
 		
+		super.checkNotPanicExists();
+		
 		super.clickOnListingRecord(recordIndex);
-
+		
 		super.fillInputBoxIn("title", title);
 		super.fillInputBoxIn("startExecutionPeriod", startPeriod);
 		super.fillInputBoxIn("endExecutionPeriod", endPeriod);
@@ -72,4 +77,17 @@ public class ManagerTaskUpdateTest extends AcmePlannerTest {
 
 		super.signOut();
 	}
+	
+	@Test
+	@Order(30)
+	public void authorizeNegative() {
+		super.signIn("administrator", "administrator");
+		
+		super.navigate("/manager/task/create", null);
+		
+		super.checkPanicExists();
+		
+		super.signOut();
+	}
+	
 }

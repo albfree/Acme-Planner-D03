@@ -1,6 +1,7 @@
 package acme.testing.manager.task;
 
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
@@ -15,6 +16,8 @@ public class ManagerTaskCreateTest extends AcmePlannerTest {
 		super.signIn("manager1", "manager1");
 
 		super.clickOnMenu("Manager", "Create task");
+		
+		super.checkNotPanicExists();
 
 		super.fillInputBoxIn("title", title);
 		super.fillInputBoxIn("startExecutionPeriod", startPeriod);
@@ -52,6 +55,8 @@ public class ManagerTaskCreateTest extends AcmePlannerTest {
 		super.signIn("manager1", "manager1");
 
 		super.clickOnMenu("Manager", "Create task");
+		
+		super.checkNotPanicExists();
 
 		super.fillInputBoxIn("title", title);
 		super.fillInputBoxIn("startExecutionPeriod", startPeriod);
@@ -64,6 +69,18 @@ public class ManagerTaskCreateTest extends AcmePlannerTest {
 
 		super.checkErrorsExist();
 
+		super.signOut();
+	}
+	
+	@Test
+	@Order(30)
+	public void authorizeNegative() {
+		super.signIn("administrator", "administrator");
+		
+		super.navigate("/manager/task/create", null);
+		
+		super.checkPanicExists();
+		
 		super.signOut();
 	}
 }

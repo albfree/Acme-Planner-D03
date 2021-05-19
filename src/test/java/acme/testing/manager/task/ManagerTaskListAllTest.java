@@ -1,6 +1,7 @@
 package acme.testing.manager.task;
 
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
@@ -15,6 +16,8 @@ public class ManagerTaskListAllTest extends AcmePlannerTest {
 		super.signIn("manager1", "manager1");
 
 		super.clickOnMenu("Manager", "Tasks list");
+		
+		super.checkNotPanicExists();
 		
 		super.checkColumnHasValue(recordIndex, 0, title);
 		super.checkColumnHasValue(recordIndex, 1, startPeriod);
@@ -31,6 +34,18 @@ public class ManagerTaskListAllTest extends AcmePlannerTest {
 		super.checkInputBoxHasValue("share", visibility);
 		super.checkInputBoxHasValue("link", link);
 
+		super.signOut();
+	}
+	
+	@Test
+	@Order(30)
+	public void authorizeNegative() {
+		super.signIn("administrator", "administrator");
+		
+		super.navigate("/manager/task/list", null);
+		
+		super.checkPanicExists();
+		
 		super.signOut();
 	}
 	
