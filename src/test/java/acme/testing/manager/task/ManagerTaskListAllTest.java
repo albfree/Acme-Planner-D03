@@ -9,6 +9,14 @@ import acme.testing.AcmePlannerTest;
 
 public class ManagerTaskListAllTest extends AcmePlannerTest {
 
+	/*
+     * listAllPositive(final int recordIndex, final String title, final String startPeriod, final String endPeriod, final String workload, final String description, final String visibility, final String link):
+     *
+     *         - Caso positivo de la acción list sobre la entidad Task por parte del rol Manager
+     *         - El test espera resultados positivos comprobando que las entidades aparecen en el listado y pueden mostrarse con todos sus datos.
+     *         - Los datos utilizados en el fichero .csv son tareas válidas
+     *         
+     */
 	@ParameterizedTest
 	@CsvFileSource(resources = "/manager/task/list-all.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
@@ -37,8 +45,15 @@ public class ManagerTaskListAllTest extends AcmePlannerTest {
 		super.signOut();
 	}
 	
+	/*
+     * authorizeNegative():
+     *
+     *         - Caso negativo de la acción list sobre la entidad Task por parte del rol Manager
+     *         - El test espera resultados negativos comprobando que un usuario no autorizado intente acceder a la ruta especificada.
+     *         
+     */
 	@Test
-	@Order(30)
+	@Order(20)
 	public void authorizeNegative() {
 		super.signIn("administrator", "administrator");
 		

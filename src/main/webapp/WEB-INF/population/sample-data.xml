@@ -50,7 +50,7 @@
 	</bean>
 	
 	<bean id="shout05" class="acme.entities.shouts.Shout">
-		<property name="moment" value="2021/06/20 10:39"/>
+		<property name="moment" value="2021/08/20 10:39"/>
 		<property name="author" value="Javier Moreno"/>
 		<property name="text" value="Este grito es muy reciente!"/>
 		<property name="info"><null/></property>	
@@ -134,7 +134,7 @@
 	<bean id="task07" class="acme.entities.tasks.Task">
 		<property name="title" value="Task 07"/>
 		<property name="startExecutionPeriod" value="2021/05/06 13:55"/>
-		<property name="endExecutionPeriod" value="2021/06/17 18:35"/>
+		<property name="endExecutionPeriod" value="2021/08/17 18:35"/>
 		<property name="workload" value="25.20"/>
 		<property name="description" value="This is the description for Task 07"/>
 		<property name="share" value="PUBLIC"/>
@@ -144,9 +144,9 @@
 	
 	<bean id="task08" class="acme.entities.tasks.Task">
 		<property name="title" value="Task 08"/>
-		<property name="startExecutionPeriod" value="2021/06/01 01:00"/>
+		<property name="startExecutionPeriod" value="2021/10/01 01:00"/>
 		<property name="endExecutionPeriod" value="2022/01/04 12:00"/>
-		<property name="workload" value="100.00"/>
+		<property name="workload" value="10.00"/>
 		<property name="description" value="This is the description for Task 08"/>
 		<property name="share" value="PUBLIC"/>
 		<property name="link" value="http://www.example.org"/>
@@ -155,7 +155,7 @@
 	
 	<bean id="task09" class="acme.entities.tasks.Task">
 		<property name="title" value="Task 09"/>
-		<property name="startExecutionPeriod" value="2021/06/02 14:30"/>
+		<property name="startExecutionPeriod" value="2021/10/02 14:30"/>
 		<property name="endExecutionPeriod" value="2021/11/19 22:45"/>
 		<property name="workload" value="46.23"/>
 		<property name="description" value="This is the description for Task 09"/>
@@ -163,6 +163,28 @@
 		<property name="link" value="http://www.example.org"/>
 		<property name="manager" ref="manager01Manager"></property>
 	</bean>
+	
+	<bean id="task10" class="acme.entities.tasks.Task">
+        <property name="title" value="Task 10"/>
+        <property name="startExecutionPeriod" value="2021/06/03 01:00"/>
+        <property name="endExecutionPeriod" value="2022/01/04 12:00"/>
+        <property name="workload" value="70.00"/>
+        <property name="description" value="This is the description for Task 10"/>
+        <property name="share" value="PUBLIC"/>
+        <property name="link" value="http://www.example.org/" />
+        <property name="manager" ref="manager01Manager"></property>
+    </bean>
+
+    <bean id="task11" class="acme.entities.tasks.Task">
+        <property name="title" value="Task 11"/>
+        <property name="startExecutionPeriod" value="2021/06/10 14:30"/>
+        <property name="endExecutionPeriod" value="2021/11/19 22:45"/>
+        <property name="workload" value="57.43"/>
+        <property name="description" value="This is the description for Task 09"/>
+        <property name="share" value="PUBLIC"/>
+        <property name="link" value="http://www.example.org/" />
+        <property name="manager" ref="manager01Manager"></property>
+    </bean>
 	
 	<!-- WorkPlans -->
 	
@@ -220,6 +242,34 @@
 		</property>
 		<property name="manager" ref="manager01Manager"></property>
 	</bean>
+    
+    <bean id="workPlan05" class="acme.entities.workplans.WorkPlan">
+        <property name="title" value="Work plan 05"/>
+        <property name="startExecutionPeriod" value="2021/07/07 15:00"/>
+        <property name="endExecutionPeriod" value="2022/01/05 15:00"/>
+        <property name="share" value="PUBLIC"/>
+        <property name="tasks">
+            <list>
+                <ref bean="task05" />
+                <ref bean="task10" />
+            </list>
+        </property>
+        <property name="manager" ref="manager01Manager"></property>
+    </bean>
+
+    <bean id="workPlan06" class="acme.entities.workplans.WorkPlan">
+        <property name="title" value="Work plan 06"/>
+        <property name="startExecutionPeriod" value="2021/01/01 15:00"/>
+        <property name="endExecutionPeriod" value="2021/11/20 12:40"/>
+        <property name="share" value="PUBLIC"/>
+        <property name="tasks">
+            <list>
+                <ref bean="task01" />
+                <ref bean="task11" />
+            </list>
+        </property>
+        <property name="manager" ref="manager01Manager"></property>
+    </bean>
 	
 	<!-- Managers -->
 	
