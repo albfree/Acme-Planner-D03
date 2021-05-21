@@ -20,6 +20,16 @@ public class AnonymousTaskListAllTest extends AcmePlannerTest {
 		super.checkColumnHasValue(recordIndex, 1, startPeriod);
 		super.checkColumnHasValue(recordIndex, 2, endPeriod);
 		super.checkColumnHasValue(recordIndex, 3, workload);
+		
+		super.clickOnListingRecord(recordIndex);
+
+		super.checkInputBoxHasValue("title", title);
+		super.checkInputBoxHasValue("startExecutionPeriod", startPeriod);
+		super.checkInputBoxHasValue("endExecutionPeriod", endPeriod);
+		super.checkInputBoxHasValue("workload", workload);
+		super.checkInputBoxHasValue("description", description);
+		super.checkInputBoxHasValue("share", visibility);
+		super.checkInputBoxHasValue("link", link);
 
 	}
 }
