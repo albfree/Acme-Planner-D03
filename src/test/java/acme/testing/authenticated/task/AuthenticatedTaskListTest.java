@@ -19,7 +19,7 @@ public class AuthenticatedTaskListTest extends AcmePlannerTest{
 	
 	@ParameterizedTest
 	@CsvFileSource(resources="/authenticated/task/list_all.csv", encoding="utf-8", numLinesToSkip = 1 )
-	@Order(18)
+	@Order(10)
 	public void listAll(final int recordIndex, final String title, final String startPeriod, final String endPeriod, final String workload, final String description, final String visibility, final String link) {
 		super.signIn("manager2", "manager2");
 		super.clickOnMenu("Authenticated", "Tasks list");
