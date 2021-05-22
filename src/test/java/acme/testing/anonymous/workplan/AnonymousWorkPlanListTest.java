@@ -1,5 +1,5 @@
 /*
- * AnonymousTaskListByTest.java
+ * AnonymousWorkPlanListTest.java
  *
  * Copyright (C) 2012-2021 Rafael Corchuelo.
  *
@@ -10,7 +10,7 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.testing.anonymous.task;
+package acme.testing.anonymous.workplan;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +19,7 @@ import org.openqa.selenium.By;
 
 import acme.testing.AcmePlannerTest;
 
-public class AnonymousTaskListByTest extends AcmePlannerTest {
+public class AnonymousWorkPlanListTest extends AcmePlannerTest {
 
 	// Lifecycle management ---------------------------------------------------
 	
@@ -56,7 +56,6 @@ public class AnonymousTaskListByTest extends AcmePlannerTest {
 		super.checkInputBoxHasValue("endExecutionPeriod", endExecutionPeriod);	
 		super.checkInputBoxHasValue("totalWorkload", totalWorkload);
 		super.checkInputBoxHasValue("share", share);
-		super.checkButtonExists("View tasks");
 		
 		if(!checkTasks.isEmpty()) {
 			
