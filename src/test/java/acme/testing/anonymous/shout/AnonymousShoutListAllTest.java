@@ -8,6 +8,14 @@ import acme.testing.AcmePlannerTest;
 
 public class AnonymousShoutListAllTest extends AcmePlannerTest{
 
+	
+//	listAll(final int recordIndex, final String moment, final String author, final String text, final String info):
+//	    
+//	             - Caso positivo de la acción list sobre la entidad Shout por parte del rol Anonymous
+//	             - El test espera resultados positivos comprobando que las entidades aparecen en el listado y pueden mostrarse con todos sus datos.
+//	             - Los datos utilizados en el fichero .csv son shouts válidos
+	     
+	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/anonymous/shout/list-all.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
