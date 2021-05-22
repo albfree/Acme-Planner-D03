@@ -20,9 +20,16 @@ import acme.testing.AcmePlannerTest;
 
 public class AdministratorCustomisationShowTest extends AcmePlannerTest {
 
-	// Lifecycle management ---------------------------------------------------
-	
 	// Test cases -------------------------------------------------------------
+	
+	/*
+     * showPositive(final String spamWords, final String treshold ) :
+     *
+     *         - Caso positivo de la acción Show sobre la entidad Customisation por parte del rol Administrador.
+     *         - El test espera resultados positivos comprobando que las palabras spam se muestran correctamente.
+     *         - Los datos utilizados en el fichero .csv son las palabras y el umbral determinados por defecto 
+     *         en la aplicación.
+     */
 	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/administrator/customisation/show-positive.csv", encoding = "utf-8", numLinesToSkip = 1)
@@ -37,12 +44,6 @@ public class AdministratorCustomisationShowTest extends AcmePlannerTest {
 		super.checkInputBoxHasValue("threshold", treshold);
 
 		super.signOut();
-	}
-	
-	//Negative Case : En el caso de Show no es necesario implementar un caso negativo
-	
-
-	// Ancillary methods ------------------------------------------------------
-
+	}	
 
 }

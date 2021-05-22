@@ -20,9 +20,21 @@ import acme.testing.AcmePlannerTest;
 
 public class AdministratorCustomisationUpdateTest extends AcmePlannerTest {
 
-	// Lifecycle management ---------------------------------------------------
-	
 	// Test cases -------------------------------------------------------------
+	
+	/*
+     * updatePositive(final String spamWords, final String treshold ) :
+     *
+     *         - Caso positivo de la acción Update sobre la entidad Customisation por parte del rol Administrador.
+     *         - El test espera resultados positivos comprobando que las palabras spam y el umbral se pueden modificar 
+     *         siguiendo acciones legales en todo momento.
+     *         - Los datos utilizados en el fichero .csv son las palabras y el umbral determinadas por defecto 
+     *         en la aplicación, así como nuevos casos de prueba dentro de los límites:
+     *         
+     *         		- Cadena de texto larga pero dentro del límite de 255 caracteres
+     *         		- Umbral de 100.0%.
+     *         		- Umbral de 0.0%.
+     */
 	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/administrator/customisation/update-positive.csv", encoding = "utf-8", numLinesToSkip = 1)
@@ -45,6 +57,20 @@ public class AdministratorCustomisationUpdateTest extends AcmePlannerTest {
 		super.signOut();
 	}
 	
+	/*
+     * updateNegative(final String spamWords, final String treshold ) :
+     *
+     *         - Caso negativo de la acción Update sobre la entidad Customisation por parte del rol Administrador.
+     *         - El test espera resultados negativos comprobando que las palabras spam y el umbral no se pueden 
+     *         modificar siguiendo la estructura y restricciones ilegales
+     *         - Los datos utilizados en el fichero .csv son palabras y umbral con características ilegales.
+     *         
+     *         		- Cadena de texto demasiado corta.
+     *         		- Cadena de texto demasiado larga.
+     *         		- Umbral superior a 100%.
+     *         		- Umbral inferior a 0%.
+     */
+	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/administrator/customisation/update-negative.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(20)	
@@ -63,7 +89,4 @@ public class AdministratorCustomisationUpdateTest extends AcmePlannerTest {
 		super.signOut();
 	}
 	
-	// Ancillary methods ------------------------------------------------------
-
-
 }
