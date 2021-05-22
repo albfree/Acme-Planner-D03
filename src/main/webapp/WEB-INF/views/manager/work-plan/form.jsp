@@ -59,9 +59,6 @@
 	
 	<acme:form-submit test="${command != 'create'}" method="get" code="manager.work-plan.form.button.task.list" 
 		action="/manager/task/list_by?id=${wpID}"/>
-		
-	<acme:form-submit test="${command != 'create'}" method="get" code="manager.work-plan.form.button.task.add" 
-		action="/manager/task/list_available?id=${wpID}"/>
 	
 	<acme:menu-separator/>
 	

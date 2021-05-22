@@ -47,9 +47,6 @@ public class ManagerTaskController extends AbstractController<Manager, Task> {
 	
 	@Autowired
 	protected ManagerTaskByWorkPlanListService	listByWorkPlanService;
-	
-	@Autowired
-	protected ManagerTaskAvailableListService	listAvailableService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -61,7 +58,6 @@ public class ManagerTaskController extends AbstractController<Manager, Task> {
 		super.addBasicCommand(BasicCommand.UPDATE, this.updateService);
 		super.addBasicCommand(BasicCommand.DELETE, this.deleteService);
 		super.addCustomCommand(CustomCommand.LIST_BY, BasicCommand.LIST, this.listByWorkPlanService);
-		super.addCustomCommand(CustomCommand.LIST_AVAILABLE, BasicCommand.LIST, this.listAvailableService);
 	}
 
 }
