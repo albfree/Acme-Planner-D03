@@ -14,53 +14,19 @@ import com.google.common.collect.Lists;
 import acme.testing.AcmePlannerTest;
 
 public class AdministratorDashboardShowTest extends AcmePlannerTest {
-
-	//Estos metodos necesitan loggear cada iteracion por lo que loggean más de 20 veces y me parece algo excesivo.
 	
-//	@ParameterizedTest
-//	@CsvFileSource(resources = "/administrator/dashboard/show-positive-task.csv", encoding = "utf-8", numLinesToSkip = 1)
-//	@Order(10)
-//	public void showPositiveTasks(final String recordIndex, final String value) {
-//
-//		By locator;
-//
-//		locator = By.xpath("//table/tbody/tr[" + recordIndex + "]/td");
-//
-//		super.signIn("administrator", "administrator");
-//
-//		super.clickOnMenu("Administrator", "Dashboard");
-//
-//		final String rowValue = super.locateOne(locator).getText();
-//
-//		Assertions.assertEquals(rowValue, value);
-//
-//		super.signOut();
-//	}
-
-	//	@ParameterizedTest
-	//	@CsvFileSource(resources = "/administrator/dashboard/show-positive-workplans.csv", encoding = "utf-8", numLinesToSkip = 1)
-	//	@Order(20)
-	//	public void showPositiveWorkplans( final String recordIndex, final String value) {
-	//
-	//		final By locator;
-	//		
-	//		locator = By.xpath("//table[2]/tbody/tr["+ recordIndex +  "]/td");
-	//		
-	//		super.signIn("administrator", "administrator");
-	//		
-	//		super.clickOnMenu("Administrator", "Dashboard");		
-	//		
-	//		final String rowValue = super.locateOne(locator).getText();
-	//				
-	//		Assertions.assertEquals(rowValue, value);
-	//		
-	//		super.signOut();
-	//	}
-	
-	//Estos metodos solo necesitan loggear una vez como administrador por lo que van mucho más rapido
+	/*
+	 * showPositiveTasksTable(final String expectedValues):
+	 * 	
+	 * 		- Caso positivo de la acción Show de la entidad Dashboard sobre la tabla de Tareas por parte del administrador.
+	 * 		- Este test espera resultados positivos comprobando caso a caso que los cálculos realizados por la aplicación
+	 * sean correctos.
+	 * 		- Los datos utilizados en el fichero .csv son el resultado de calcular de manera externa el valor de las métricas
+	 * correspondientes con los datos almacenados en el archivo populate-sample. 
+	 */
 	
 	@ParameterizedTest
-	@CsvFileSource(resources = "/administrator/dashboard/show-positive-task-1iteracion.csv", encoding = "utf-8", numLinesToSkip = 1)
+	@CsvFileSource(resources = "/administrator/dashboard/show-positive-taskTable.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
 	public void showPositiveTasksTable(final String expectedValues) {
 
@@ -85,9 +51,19 @@ public class AdministratorDashboardShowTest extends AcmePlannerTest {
 		super.signOut();
 	}
 
-
+	/*
+	 * showPositiveTasksTable(final String expectedValues):
+	 * 	
+	 * 		- Caso positivo de la acción Show de la entidad Dashboard sobre la tabla de Planes de Tareas 
+	 * por parte del administrador.
+	 * 		- Este test espera resultados positivos comprobando caso a caso que los cálculos realizados por la aplicación
+	 * sean correctos.
+	 * 		- Los datos utilizados en el fichero .csv son el resultado de calcular de manera externa el valor de las métricas 
+	 * correspondientes con los datos almacenados en el archivo populate-sample. 
+	 */
+	
 	@ParameterizedTest
-	@CsvFileSource(resources = "/administrator/dashboard/show-positive-workplans-1iteracion.csv", encoding = "utf-8", numLinesToSkip = 1)
+	@CsvFileSource(resources = "/administrator/dashboard/show-positive-workplansTable.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(20)
 	public void showPositiveWorkplansTable(final String expectedValues) {
 
