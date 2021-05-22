@@ -84,7 +84,7 @@ public class ManagerWorkPlanUpdateTest extends AcmePlannerTest {
 	@ParameterizedTest
 	@CsvFileSource(resources = "/manager/workplan/update-negative.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(20)
-	public void updatePositive(final int recordIndex, final String title, final String startExecutionPeriod, final String endExecutionPeriod, final String share, final String addTask) {
+	public void updateNegative(final int recordIndex, final String title, final String startExecutionPeriod, final String endExecutionPeriod, final String share, final String addTask) {
 		super.signIn("manager1", "manager1");
 
 		super.clickOnMenu("Manager", "Work plans list");
@@ -101,6 +101,8 @@ public class ManagerWorkPlanUpdateTest extends AcmePlannerTest {
 		if (addTask != null && super.exists(inputLocatorAddTask)) {
 			super.fillInputBoxIn("addTask", addTask);
 		}
+		
+		super.clickOnSubmitButton("Update");
 		
 		super.checkErrorsExist();
 
