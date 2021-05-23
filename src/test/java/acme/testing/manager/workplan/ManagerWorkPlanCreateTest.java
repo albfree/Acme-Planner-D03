@@ -13,6 +13,13 @@ public class ManagerWorkPlanCreateTest extends AcmePlannerTest {
 
 	// Test cases -------------------------------------------------------------
 
+	/*
+	 * - La feature que se comprueba en este test es el crear planes de trabajo sin errores por un manager.
+	 * - El test comprobará que los datos que se muestran en el listado y en los detalles de los planes de trabajo son correctos
+	 * después de crearlos.
+	 * 
+	 */
+
 	@ParameterizedTest
 	@CsvFileSource(resources = "/manager/workplan/create-positive.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
@@ -43,6 +50,15 @@ public class ManagerWorkPlanCreateTest extends AcmePlannerTest {
 
 		super.signOut();
 	}
+
+	/*
+	 * - La feature que se comprueba en este test es el crear planes de trabajo con errores por un manager.
+	 * - Los datos utilizados en el fichero .csv son planes de trabajo no válidos
+	 * 		- El test comprueba que se violan las siguientes restricciones:
+	 * 			- Restricción 1: La entidad no debe contener spam.
+	 * 			- Restricción 2: El final del periodo de ejecución debe ser posterior al de inicio.
+	 * 
+	 */
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "/manager/workplan/create-negative.csv", encoding = "utf-8", numLinesToSkip = 1)

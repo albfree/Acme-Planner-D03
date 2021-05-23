@@ -12,6 +12,12 @@ public class ManagerWorkPlanListTest extends AcmePlannerTest {
 	// Lifecycle management ---------------------------------------------------
 
 	// Test cases -------------------------------------------------------------
+	
+	/*
+	 * - Las features que se comprueban en este test son el listar y mostrar los planes de trabajo por un manager.
+	 * - El test comprobará que los datos que se muestran en el listado y en los detalles de los planes de trabajo son correctos.
+	 * 
+	 */
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "/manager/workplan/list.csv", encoding = "utf-8", numLinesToSkip = 1)

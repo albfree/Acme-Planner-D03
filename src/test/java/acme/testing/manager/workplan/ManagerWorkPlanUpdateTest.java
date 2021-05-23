@@ -13,6 +13,14 @@ public class ManagerWorkPlanUpdateTest extends AcmePlannerTest {
 	// Lifecycle management ---------------------------------------------------
 
 	// Test cases -------------------------------------------------------------
+	
+	/*
+	 * - La feature que se comprueba en este test es el actualizar planes de trabajo sin errores por un manager.
+	 * - El test comprobará que los datos que se muestran en el listado y en los detalles de los planes de trabajo son correctos
+	 * después de actualizarlos. Además, si después de actualizar el plan de trabajo éste tiene tareas, comprobará que las tareas
+	 * son las que deben ser mediante el id.
+	 * 
+	 */
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "/manager/workplan/update-positive.csv", encoding = "utf-8", numLinesToSkip = 1)
@@ -22,6 +30,8 @@ public class ManagerWorkPlanUpdateTest extends AcmePlannerTest {
 		super.signIn("manager1", "manager1");
 
 		super.clickOnMenu("Manager", "Work plans list");
+		
+		super.checkColumnHasValue(recordIndex, 0, title);
 
 		super.clickOnListingRecord(recordIndex);
 
@@ -81,6 +91,17 @@ public class ManagerWorkPlanUpdateTest extends AcmePlannerTest {
 		super.signOut();
 	}
 	
+	/*
+	 * - La feature que se comprueba en este test es el actualizar planes de trabajo con errores por un manager.
+	 * - Los datos utilizados en el fichero .csv son planes de trabajo no válidos
+	 * 		- El test comprueba que se violan las siguientes restricciones:
+	 * 			- Restricción 1: Un plan de trabajo que contiene tareas privadas no puede ser público.
+	 * 			- Restricción 2: La entidad no debe contener spam.
+	 * 			- Restricción 3: El final del periodo de ejecución debe ser posterior al de inicio.
+	 * 			- Restricción 4: No se puede añadir una tarea que está fuera del periodo de ejecución del plan de trabajo.
+	 * 
+	 */
+	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/manager/workplan/update-negative.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(20)
@@ -88,6 +109,8 @@ public class ManagerWorkPlanUpdateTest extends AcmePlannerTest {
 		super.signIn("manager1", "manager1");
 
 		super.clickOnMenu("Manager", "Work plans list");
+		
+		super.checkColumnHasValue(recordIndex, 0, title);
 		
 		super.clickOnListingRecord(recordIndex);
 		
