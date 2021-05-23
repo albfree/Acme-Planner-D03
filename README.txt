@@ -20,7 +20,15 @@ URLs que contienen /manager provocan errores. Para solucionarlo, se modifica el 
 y para probar la aplicación desplegada habrá que añadir a la URL que proporciona Clever Cloud
 lo siguiente: /Acme-Planner
 
-# Interpretaciones y consideraciones:
+### TERCERA ENTREGA - Interpretaciones y consideraciones:
+
+- Hay servicios en los que no se alcanza el 60% debido a que los métodos unbind no se ejecutan, por ejemplo,
+en los update no se ejecutan ya que la petición GET se hace contra el show y al pulsar el botón Update se envía el POST.
+Aún así, la lógica de negocio importante como las validaciones se ejecutan.
+
+Dichos servicios son: ManagerWorkPlanUpdateService, ManagerWorkPlanDeleteService...
+
+### SEGUNDA ENTREGA - Interpretaciones y consideraciones:
 
 - La funcionalidad de hacerse manager no está implementada porque no se pide como requisito. Para solventar
 este problema, se añade al initial-data.xml un manager con las siguientes credenciales: manager / manager
