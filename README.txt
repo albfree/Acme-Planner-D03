@@ -26,7 +26,8 @@ lo siguiente: /Acme-Planner
 en los update no se ejecutan ya que la petición GET se hace contra el show y al pulsar el botón Update se envía el POST.
 Aún así, la lógica de negocio importante como las validaciones se ejecutan.
 
-Dichos servicios son: ManagerWorkPlanUpdateService, ManagerWorkPlanDeleteService...
+Dichos servicios son: ManagerWorkPlanUpdateService, ManagerWorkPlanDeleteService, AdministratorCustomisationUpdateService,
+ManagerTaskDeleteService
 
 ### SEGUNDA ENTREGA - Interpretaciones y consideraciones:
 
